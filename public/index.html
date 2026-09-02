@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PetCare | Gestão de Pet Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca">
+      <span class="logo">🐾</span>
+      <div>
+        <h1>PetCare</h1>
+        <p>Sistema de Gestão de Pet Shop</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="conteudo">
+    <section class="cabecalho-pagina">
+      <div>
+        <h2>Clientes e Tutores</h2>
+        <p>Cadastre e gerencie os dados dos tutores dos pets.</p>
+      </div>
+      <div class="contador">
+        <span id="total-clientes">0</span>
+        <small>clientes cadastrados</small>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="titulo-card">
+        <h3 id="titulo-formulario">Cadastrar novo cliente</h3>
+        <p>Preencha todos os campos para salvar o cadastro.</p>
+      </div>
+
+      <form id="form-cliente">
+        <input type="hidden" id="cliente-id">
+
+        <div class="grid-formulario">
+          <div class="campo campo-largo">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" placeholder="Ex.: Maria da Silva" required>
+          </div>
+
+          <div class="campo">
+            <label for="telefone">Telefone</label>
+            <input type="tel" id="telefone" placeholder="(11) 99999-9999" required>
+          </div>
+
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="maria@email.com" required>
+          </div>
+
+          <div class="campo campo-largo">
+            <label for="endereco">Endereço</label>
+            <input type="text" id="endereco" placeholder="Rua, número, bairro e cidade" required>
+          </div>
+        </div>
+
+        <div class="acoes-formulario">
+          <button type="button" id="btn-cancelar" class="botao secundario" hidden>
+            Cancelar edição
+          </button>
+          <button type="submit" class="botao primario" id="btn-salvar">
+            Cadastrar cliente
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="titulo-lista">
+        <div>
+          <h3>Clientes cadastrados</h3>
+          <p>Consulte, edite ou exclua um cadastro.</p>
+        </div>
+        <input
+          type="search"
+          id="campo-busca"
+          placeholder="Buscar por nome, e-mail ou telefone"
+        >
+      </div>
+
+      <div class="tabela-responsiva">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Telefone</th>
+              <th>E-mail</th>
+              <th>Endereço</th>
+              <th class="coluna-acoes">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="lista-clientes">
+            <tr>
+              <td colspan="5" class="vazio">Carregando clientes...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="mensagem" class="mensagem" role="alert"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

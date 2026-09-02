@@ -1,0 +1,23 @@
+{
+  "name": "petcare-sistema",
+  "version": "1.0.0",
+  "description": "Sistema de gestão de pet shop - Projeto de Software",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "petcare",
+    "petshop",
+    "postgresql",
+    "crud"
+  ],
+  "author": "Seu Nome",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  }
+}
