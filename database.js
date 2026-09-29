@@ -23,7 +23,24 @@ async function criarTabelas() {
       )
     `);
 
-    console.log('Tabela clientes criada ou verificada.');
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS pets (
+        id SERIAL PRIMARY KEY,
+        nome VARCHAR(80) NOT NULL,
+        especie VARCHAR(50) NOT NULL,
+        raca VARCHAR(80),
+        idade INTEGER NOT NULL CHECK (idade >= 0),
+        porte VARCHAR(20) NOT NULL,
+        cliente_id INTEGER NOT NULL,
+        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        CONSTRAINT fk_pet_cliente
+          FOREIGN KEY (cliente_id)
+          REFERENCES clientes(id)
+          ON DELETE CASCADE
+      )
+    `);
+
+    console.log('Tabelas clientes e pets criadas ou verificadas.');
   } catch (erro) {
     console.error('Erro ao criar tabelas:', erro.message);
   }

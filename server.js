@@ -12,6 +12,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/* =========================
+   CRUD DE CLIENTES - AC1
+========================= */
+
 app.get('/api/clientes', async (req, res) => {
   try {
     const resultado = await pool.query(
@@ -104,6 +108,139 @@ app.delete('/api/clientes/:id', async (req, res) => {
     res.json({ mensagem: 'Cliente excluído com sucesso.' });
   } catch (erro) {
     res.status(500).json({ erro: 'Não foi possível excluir o cliente.' });
+  }
+});
+
+/* =========================
+   CRUD DE PETS - AC2
+========================= */
+
+app.get('/api/pets', async (req, res) => {
+  try {
+    const resultado = await pool.query(`
+      SELECT
+        pets.id,
+        pets.nome,
+        pets.especie,
+        pets.raca,
+        pets.idade,
+        pets.porte,
+        pets.cliente_id,
+        clientes.nome AS tutor_nome
+      FROM pets
+      INNER JOIN clientes ON pets.cliente_id = clientes.id
+      ORDER BY pets.id DESC
+    `);
+
+    res.json(resultado.rows);
+  } catch (erro) {
+    res.status(500).json({ erro: 'Não foi possível listar os pets.' });
+  }
+});
+
+app.post('/api/pets', async (req, res) => {
+  const { nome, especie, raca, idade, porte, cliente_id } = req.body;
+
+  if (!nome || !especie || idade === '' || idade === undefined || !porte || !cliente_id) {
+    return res.status(400).json({
+      erro: 'Preencha nome, espécie, idade, porte e tutor.'
+    });
+  }
+
+  const idadeNumero = Number(idade);
+  const clienteIdNumero = Number(cliente_id);
+
+  if (!Number.isInteger(idadeNumero) || idadeNumero < 0) {
+    return res.status(400).json({
+      erro: 'A idade deve ser um número inteiro igual ou maior que zero.'
+    });
+  }
+
+  try {
+    const resultado = await pool.query(
+      `INSERT INTO pets (nome, especie, raca, idade, porte, cliente_id)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING *`,
+      [nome, especie, raca || null, idadeNumero, porte, clienteIdNumero]
+    );
+
+    res.status(201).json(resultado.rows[0]);
+  } catch (erro) {
+    if (erro.code === '23503') {
+      return res.status(400).json({
+        erro: 'O tutor selecionado não existe.'
+      });
+    }
+
+    res.status(500).json({ erro: 'Não foi possível cadastrar o pet.' });
+  }
+});
+
+app.put('/api/pets/:id', async (req, res) => {
+  const { nome, especie, raca, idade, porte, cliente_id } = req.body;
+  const { id } = req.params;
+
+  if (!nome || !especie || idade === '' || idade === undefined || !porte || !cliente_id) {
+    return res.status(400).json({
+      erro: 'Preencha nome, espécie, idade, porte e tutor.'
+    });
+  }
+
+  const idadeNumero = Number(idade);
+  const clienteIdNumero = Number(cliente_id);
+
+  if (!Number.isInteger(idadeNumero) || idadeNumero < 0) {
+    return res.status(400).json({
+      erro: 'A idade deve ser um número inteiro igual ou maior que zero.'
+    });
+  }
+
+  try {
+    const resultado = await pool.query(
+      `UPDATE pets
+       SET nome = $1,
+           especie = $2,
+           raca = $3,
+           idade = $4,
+           porte = $5,
+           cliente_id = $6
+       WHERE id = $7
+       RETURNING *`,
+      [nome, especie, raca || null, idadeNumero, porte, clienteIdNumero, id]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({ erro: 'Pet não encontrado.' });
+    }
+
+    res.json(resultado.rows[0]);
+  } catch (erro) {
+    if (erro.code === '23503') {
+      return res.status(400).json({
+        erro: 'O tutor selecionado não existe.'
+      });
+    }
+
+    res.status(500).json({ erro: 'Não foi possível atualizar o pet.' });
+  }
+});
+
+app.delete('/api/pets/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const resultado = await pool.query(
+      'DELETE FROM pets WHERE id = $1 RETURNING *',
+      [id]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({ erro: 'Pet não encontrado.' });
+    }
+
+    res.json({ mensagem: 'Pet excluído com sucesso.' });
+  } catch (erro) {
+    res.status(500).json({ erro: 'Não foi possível excluir o pet.' });
   }
 });
 

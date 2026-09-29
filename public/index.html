@@ -17,91 +17,216 @@
     </div>
   </header>
 
+  <nav class="menu-principal">
+    <button type="button" class="item-menu ativo" data-tela="clientes">
+      Clientes e Tutores
+    </button>
+    <button type="button" class="item-menu" data-tela="pets">
+      Pets
+    </button>
+  </nav>
+
   <main class="conteudo">
-    <section class="cabecalho-pagina">
-      <div>
-        <h2>Clientes e Tutores</h2>
-        <p>Cadastre e gerencie os dados dos tutores dos pets.</p>
-      </div>
-      <div class="contador">
-        <span id="total-clientes">0</span>
-        <small>clientes cadastrados</small>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="titulo-card">
-        <h3 id="titulo-formulario">Cadastrar novo cliente</h3>
-        <p>Preencha todos os campos para salvar o cadastro.</p>
-      </div>
-
-      <form id="form-cliente">
-        <input type="hidden" id="cliente-id">
-
-        <div class="grid-formulario">
-          <div class="campo campo-largo">
-            <label for="nome">Nome completo</label>
-            <input type="text" id="nome" placeholder="Ex.: Maria da Silva" required>
-          </div>
-
-          <div class="campo">
-            <label for="telefone">Telefone</label>
-            <input type="tel" id="telefone" placeholder="(11) 99999-9999" required>
-          </div>
-
-          <div class="campo">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" placeholder="maria@email.com" required>
-          </div>
-
-          <div class="campo campo-largo">
-            <label for="endereco">Endereço</label>
-            <input type="text" id="endereco" placeholder="Rua, número, bairro e cidade" required>
-          </div>
-        </div>
-
-        <div class="acoes-formulario">
-          <button type="button" id="btn-cancelar" class="botao secundario" hidden>
-            Cancelar edição
-          </button>
-          <button type="submit" class="botao primario" id="btn-salvar">
-            Cadastrar cliente
-          </button>
-        </div>
-      </form>
-    </section>
-
-    <section class="card">
-      <div class="titulo-lista">
+    <section id="tela-clientes" class="tela ativa">
+      <section class="cabecalho-pagina">
         <div>
-          <h3>Clientes cadastrados</h3>
-          <p>Consulte, edite ou exclua um cadastro.</p>
+          <h2>Clientes e Tutores</h2>
+          <p>Cadastre e gerencie os dados dos tutores dos pets.</p>
         </div>
-        <input
-          type="search"
-          id="campo-busca"
-          placeholder="Buscar por nome, e-mail ou telefone"
-        >
-      </div>
+        <div class="contador">
+          <span id="total-clientes">0</span>
+          <small>clientes cadastrados</small>
+        </div>
+      </section>
 
-      <div class="tabela-responsiva">
-        <table>
-          <thead>
-            <tr>
-              <th>Cliente</th>
-              <th>Telefone</th>
-              <th>E-mail</th>
-              <th>Endereço</th>
-              <th class="coluna-acoes">Ações</th>
-            </tr>
-          </thead>
-          <tbody id="lista-clientes">
-            <tr>
-              <td colspan="5" class="vazio">Carregando clientes...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <section class="card">
+        <div class="titulo-card">
+          <h3 id="titulo-formulario-cliente">Cadastrar novo cliente</h3>
+          <p>Preencha todos os campos para salvar o cadastro.</p>
+        </div>
+
+        <form id="form-cliente">
+          <input type="hidden" id="cliente-id">
+
+          <div class="grid-formulario">
+            <div class="campo campo-largo">
+              <label for="nome">Nome completo</label>
+              <input type="text" id="nome" placeholder="Ex.: Maria da Silva" required>
+            </div>
+
+            <div class="campo">
+              <label for="telefone">Telefone</label>
+              <input type="tel" id="telefone" placeholder="(11) 99999-9999" required>
+            </div>
+
+            <div class="campo">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" placeholder="maria@email.com" required>
+            </div>
+
+            <div class="campo campo-largo">
+              <label for="endereco">Endereço</label>
+              <input type="text" id="endereco" placeholder="Rua, número, bairro e cidade" required>
+            </div>
+          </div>
+
+          <div class="acoes-formulario">
+            <button type="button" id="btn-cancelar-cliente" class="botao secundario" hidden>
+              Cancelar edição
+            </button>
+            <button type="submit" class="botao primario" id="btn-salvar-cliente">
+              Cadastrar cliente
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="titulo-lista">
+          <div>
+            <h3>Clientes cadastrados</h3>
+            <p>Consulte, edite ou exclua um cadastro.</p>
+          </div>
+          <input
+            type="search"
+            id="campo-busca-clientes"
+            placeholder="Buscar por nome, e-mail ou telefone"
+          >
+        </div>
+
+        <div class="tabela-responsiva">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Telefone</th>
+                <th>E-mail</th>
+                <th>Endereço</th>
+                <th class="coluna-acoes">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="lista-clientes">
+              <tr>
+                <td colspan="5" class="vazio">Carregando clientes...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section id="tela-pets" class="tela">
+      <section class="cabecalho-pagina">
+        <div>
+          <h2>Pets</h2>
+          <p>Cadastre e gerencie os pets vinculados aos seus tutores.</p>
+        </div>
+        <div class="contador">
+          <span id="total-pets">0</span>
+          <small>pets cadastrados</small>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="titulo-card">
+          <h3 id="titulo-formulario-pet">Cadastrar novo pet</h3>
+          <p>Informe os dados do pet e selecione o tutor responsável.</p>
+        </div>
+
+        <form id="form-pet">
+          <input type="hidden" id="pet-id">
+
+          <div class="grid-formulario">
+            <div class="campo">
+              <label for="pet-nome">Nome do pet</label>
+              <input type="text" id="pet-nome" placeholder="Ex.: Thor" required>
+            </div>
+
+            <div class="campo">
+              <label for="pet-especie">Espécie</label>
+              <select id="pet-especie" required>
+                <option value="">Selecione a espécie</option>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>
+                <option value="Ave">Ave</option>
+                <option value="Coelho">Coelho</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="pet-raca">Raça</label>
+              <input type="text" id="pet-raca" placeholder="Ex.: Golden Retriever">
+            </div>
+
+            <div class="campo">
+              <label for="pet-idade">Idade</label>
+              <input type="number" id="pet-idade" min="0" step="1" placeholder="Ex.: 3" required>
+            </div>
+
+            <div class="campo">
+              <label for="pet-porte">Porte</label>
+              <select id="pet-porte" required>
+                <option value="">Selecione o porte</option>
+                <option value="Pequeno">Pequeno</option>
+                <option value="Médio">Médio</option>
+                <option value="Grande">Grande</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="pet-cliente">Tutor responsável</label>
+              <select id="pet-cliente" required>
+                <option value="">Carregando tutores...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="acoes-formulario">
+            <button type="button" id="btn-cancelar-pet" class="botao secundario" hidden>
+              Cancelar edição
+            </button>
+            <button type="submit" class="botao primario" id="btn-salvar-pet">
+              Cadastrar pet
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="titulo-lista">
+          <div>
+            <h3>Pets cadastrados</h3>
+            <p>Consulte, edite ou exclua um pet cadastrado.</p>
+          </div>
+          <input
+            type="search"
+            id="campo-busca-pets"
+            placeholder="Buscar por pet, espécie ou tutor"
+          >
+        </div>
+
+        <div class="tabela-responsiva">
+          <table>
+            <thead>
+              <tr>
+                <th>Pet</th>
+                <th>Espécie</th>
+                <th>Raça</th>
+                <th>Idade</th>
+                <th>Porte</th>
+                <th>Tutor</th>
+                <th class="coluna-acoes">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="lista-pets">
+              <tr>
+                <td colspan="7" class="vazio">Carregando pets...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </section>
   </main>
 
