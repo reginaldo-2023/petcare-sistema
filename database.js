@@ -40,6 +40,38 @@ async function criarTabelas() {
       )
     `);
 
+        await pool.query(`
+      CREATE TABLE IF NOT EXISTS servicos (
+        id SERIAL PRIMARY KEY,
+        nome VARCHAR(100) NOT NULL,
+        descricao VARCHAR(300) NOT NULL,
+        preco NUMERIC(10, 2) NOT NULL CHECK (preco >= 0),
+        duracao_minutos INTEGER NOT NULL
+          CHECK (duracao_minutos BETWEEN 1 AND 1440),
+        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS pet_servicos (
+        pet_id INTEGER NOT NULL,
+        servico_id INTEGER NOT NULL,
+        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+        PRIMARY KEY (pet_id, servico_id),
+
+        CONSTRAINT fk_pet_servico_pet
+          FOREIGN KEY (pet_id)
+          REFERENCES pets(id)
+          ON DELETE CASCADE,
+
+        CONSTRAINT fk_pet_servico_servico
+          FOREIGN KEY (servico_id)
+          REFERENCES servicos(id)
+          ON DELETE CASCADE
+      )
+    `);
+
     console.log('Tabelas clientes e pets criadas ou verificadas.');
   } catch (erro) {
     console.error('Erro ao criar tabelas:', erro.message);

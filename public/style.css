@@ -388,4 +388,17 @@ td:first-child {
   .titulo-lista input {
     max-width: none;
   }
+
+  .pet-vinculado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 4px 0;
+  white-space: nowrap;
+}
+
+.pet-vinculado .botao-tabela {
+  font-size: 11px;
+}
 }

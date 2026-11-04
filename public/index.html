@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PetCare | Gestão de Pet Shop</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header class="topo">
     <div class="marca">
@@ -23,6 +25,9 @@
     </button>
     <button type="button" class="item-menu" data-tela="pets">
       Pets
+    </button>
+    <button type="button" class="item-menu" data-tela="servicos">
+      Serviços
     </button>
   </nav>
 
@@ -87,11 +92,7 @@
             <h3>Clientes cadastrados</h3>
             <p>Consulte, edite ou exclua um cadastro.</p>
           </div>
-          <input
-            type="search"
-            id="campo-busca-clientes"
-            placeholder="Buscar por nome, e-mail ou telefone"
-          >
+          <input type="search" id="campo-busca-clientes" placeholder="Buscar por nome, e-mail ou telefone">
         </div>
 
         <div class="tabela-responsiva">
@@ -199,11 +200,7 @@
             <h3>Pets cadastrados</h3>
             <p>Consulte, edite ou exclua um pet cadastrado.</p>
           </div>
-          <input
-            type="search"
-            id="campo-busca-pets"
-            placeholder="Buscar por pet, espécie ou tutor"
-          >
+          <input type="search" id="campo-busca-pets" placeholder="Buscar por pet, espécie ou tutor">
         </div>
 
         <div class="tabela-responsiva">
@@ -228,10 +225,113 @@
         </div>
       </section>
     </section>
+
+    <section id="tela-servicos" class="tela">
+      <section class="cabecalho-pagina">
+        <div>
+          <h2>Serviços</h2>
+          <p>Organize os serviços oferecidos pelo PetCare.</p>
+        </div>
+
+        <div class="contador">
+          <span id="total-servicos">0</span>
+          <small>serviços cadastrados</small>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="titulo-card">
+          <h3 id="titulo-formulario-servico">Cadastrar novo serviço</h3>
+          <p>Informe o serviço, o preço e a duração estimada.</p>
+        </div>
+
+        <form id="form-servico">
+          <input type="hidden" id="servico-id">
+
+          <div class="grid-formulario">
+            <div class="campo campo-largo">
+              <label for="servico-nome">Nome do serviço</label>
+              <input type="text" id="servico-nome" maxlength="100" placeholder="Ex.: Banho" required>
+            </div>
+
+            <div class="campo campo-largo">
+              <label for="servico-descricao">Descrição</label>
+              <input type="text" id="servico-descricao" maxlength="300" placeholder="Ex.: Banho com secagem e escovação"
+                required>
+            </div>
+
+            <div class="campo">
+              <label for="servico-preco">Preço (R$)</label>
+              <input type="number" id="servico-preco" min="0" max="99999999.99" step="0.01" placeholder="Ex.: 60,00"
+                required>
+            </div>
+
+            <div class="campo">
+              <label for="servico-duracao">Duração estimada (minutos)</label>
+              <input type="number" id="servico-duracao" min="1" max="1440" step="1" placeholder="Ex.: 45" required>
+            </div>
+
+            <div class="campo campo-largo">
+              <label for="servico-pet">Vincular a um pet</label>
+              <select id="servico-pet">
+                <option value="">Carregando pets...</option>
+              </select>
+              <small class="ajuda-campo">
+                Você poderá vincular outros pets depois de cadastrar o serviço.
+              </small>
+            </div>
+          </div>
+
+          <div class="acoes-formulario">
+            <button type="button" id="btn-cancelar-servico" class="botao secundario" hidden>
+              Cancelar edição
+            </button>
+
+            <button type="submit" class="botao primario" id="btn-salvar-servico">
+              Cadastrar serviço
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="titulo-lista">
+          <div>
+            <h3>Serviços cadastrados</h3>
+            <p>Consulte, edite ou exclua os serviços oferecidos.</p>
+          </div>
+
+          <input type="search" id="campo-busca-servicos" placeholder="Buscar por nome ou descrição">
+        </div>
+
+        <div class="tabela-responsiva">
+          <table>
+            <thead>
+              <tr>
+                <th>Serviço</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Duração</th>
+                <th>Pets vinculados</th>
+                <th class="coluna-acoes">Ações</th>
+              </tr>
+            </thead>
+
+            <tbody id="lista-servicos">
+              <tr>
+                <td colspan="6" class="vazio">Carregando serviços...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
   </main>
 
   <div id="mensagem" class="mensagem" role="alert"></div>
 
   <script src="script.js"></script>
+  <script src="servicos.js"></script>
 </body>
+
 </html>
