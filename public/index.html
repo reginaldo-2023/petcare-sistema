@@ -29,6 +29,9 @@
     <button type="button" class="item-menu" data-tela="servicos">
       Serviços
     </button>
+    <button type="button" class="item-menu" data-tela="agendamentos">
+      Agendamentos
+    </button>
   </nav>
 
   <main class="conteudo">
@@ -325,13 +328,161 @@
           </table>
         </div>
       </section>
-    </section>
+      </section>
+      <section id="tela-agendamentos" class="tela">
+    <div class="cabecalho-pagina">
+      <div>
+        <h2>Agendamentos</h2>
+        <p>Organize os atendimentos dos pets por data e horário.</p>
+      </div>
+
+      <div class="contador">
+        <span id="total-agendamentos">0</span>
+        <small>agendamentos cadastrados</small>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="titulo-card">
+        <h3 id="titulo-formulario-agendamento">
+          Cadastrar novo agendamento
+        </h3>
+        <p>Selecione o pet, o serviço e o horário do atendimento.</p>
+      </div>
+
+      <form id="form-agendamento">
+        <input type="hidden" id="agendamento-id">
+
+        <div class="grid-formulario">
+          <div class="campo">
+            <label for="agendamento-pet">Pet e tutor</label>
+            <select id="agendamento-pet" required>
+              <option value="">Carregando pets...</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="agendamento-servico">Serviço</label>
+            <select id="agendamento-servico" required>
+              <option value="">Carregando serviços...</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="agendamento-data">Data</label>
+            <input type="date" id="agendamento-data" required>
+          </div>
+
+          <div class="campo">
+            <label for="agendamento-horario">Horário inicial</label>
+            <input
+              type="time"
+              id="agendamento-horario"
+              step="60"
+              required
+            >
+          </div>
+
+          <div class="campo">
+            <label for="agendamento-status">Status</label>
+            <select id="agendamento-status" required>
+              <option value="agendado">Agendado</option>
+              <option value="concluido">Concluído</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="agendamento-observacoes">Observações</label>
+            <input
+              type="text"
+              id="agendamento-observacoes"
+              maxlength="500"
+              placeholder="Opcional: cuidados ou informações do atendimento"
+            >
+          </div>
+        </div>
+
+        <p id="aviso-duracao-agendamento">
+          A duração será definida pelo serviço selecionado.
+        </p>
+
+        <div class="acoes-formulario">
+          <button
+            type="button"
+            id="btn-cancelar-agendamento"
+            class="botao secundario"
+            hidden
+          >
+            Cancelar edição
+          </button>
+
+          <button
+            type="submit"
+            id="btn-salvar-agendamento"
+            class="botao primario"
+            disabled
+          >
+            Cadastrar agendamento
+          </button>
+        </div>
+      </form>
+
+      <p
+        id="retorno-agendamento"
+        role="status"
+        aria-live="polite"
+      ></p>
+    </div>
+
+    <div class="card">
+      <div class="titulo-lista">
+        <div>
+          <h3>Agendamentos cadastrados</h3>
+          <p>Consulte, edite, cancele ou exclua um atendimento.</p>
+        </div>
+
+        <input
+          type="search"
+          id="campo-busca-agendamentos"
+          placeholder="Buscar pet, tutor, serviço ou status"
+          aria-label="Buscar agendamentos"
+        >
+      </div>
+
+      <div class="tabela-responsiva">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Horário</th>
+              <th>Pet</th>
+              <th>Tutor</th>
+              <th>Serviço</th>
+              <th>Status</th>
+              <th>Observações</th>
+              <th class="coluna-acoes">Ações</th>
+            </tr>
+          </thead>
+
+          <tbody id="lista-agendamentos">
+            <tr>
+              <td colspan="8" class="vazio">
+                Carregando agendamentos...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
   </main>
 
   <div id="mensagem" class="mensagem" role="alert"></div>
 
   <script src="script.js"></script>
   <script src="servicos.js"></script>
+  <script src="agendamentos.js"></script>
 </body>
 
 </html>

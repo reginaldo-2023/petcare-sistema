@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const pool = require('./database');
 const rotasServicos = require('./routes/servicos');
+const rotasAgendamentos = require('./routes/agendamentos');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/servicos', rotasServicos);
+app.use('/api/agendamentos', rotasAgendamentos);
 
 /* =========================
    CRUD DE CLIENTES - AC1
@@ -109,9 +111,19 @@ app.delete('/api/clientes/:id', async (req, res) => {
     }
 
     res.json({ mensagem: 'Cliente excluído com sucesso.' });
-  } catch (erro) {
-    res.status(500).json({ erro: 'Não foi possível excluir o cliente.' });
-  }
+    } catch (erro) {
+      if (erro.code === '23503') {
+        return res.status(409).json({
+          erro: 'Este cliente possui pets com agendamentos. Exclua os agendamentos desses pets antes de excluir o cliente.'
+        });
+      }
+
+      console.error('Erro ao excluir cliente:', erro);
+
+      res.status(500).json({
+        erro: 'Não foi possível excluir o cliente.'
+      });
+    }
 });
 
 /* =========================
@@ -243,7 +255,17 @@ app.delete('/api/pets/:id', async (req, res) => {
 
     res.json({ mensagem: 'Pet excluído com sucesso.' });
   } catch (erro) {
-    res.status(500).json({ erro: 'Não foi possível excluir o pet.' });
+    if (erro.code === '23503') {
+      return res.status(409).json({
+        erro: 'Este pet possui agendamentos. Exclua os agendamentos dele antes de excluir o pet.'
+      });
+    }
+
+    console.error('Erro ao excluir pet:', erro);
+
+    res.status(500).json({
+      erro: 'Não foi possível excluir o pet.'
+    });
   }
 });
 

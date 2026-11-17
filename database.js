@@ -72,7 +72,43 @@ async function criarTabelas() {
       )
     `);
 
-    console.log('Tabelas clientes e pets criadas ou verificadas.');
+    await pool.query(`
+    CREATE TABLE IF NOT EXISTS agendamentos (
+      id SERIAL PRIMARY KEY,
+      pet_id INTEGER NOT NULL,
+      servico_id INTEGER NOT NULL,
+      data DATE NOT NULL,
+      horario TIME(0) WITHOUT TIME ZONE NOT NULL,
+      duracao_minutos INTEGER NOT NULL
+        CHECK (duracao_minutos BETWEEN 1 AND 1440),
+      status VARCHAR(20) NOT NULL DEFAULT 'agendado'
+        CHECK (status IN ('agendado', 'concluido', 'cancelado')),
+      observacoes VARCHAR(500) NOT NULL DEFAULT '',
+      criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+      CONSTRAINT fk_agendamento_pet
+        FOREIGN KEY (pet_id)
+        REFERENCES pets(id)
+        ON DELETE RESTRICT,
+
+      CONSTRAINT fk_agendamento_servico
+        FOREIGN KEY (servico_id)
+        REFERENCES servicos(id)
+        ON DELETE RESTRICT
+    )
+    `);
+
+    await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_agendamentos_pet_data
+    ON agendamentos (pet_id, data)
+    `);
+
+    await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_agendamentos_servico
+    ON agendamentos (servico_id)
+    `);
+
+console.log('Tabelas do PetCare criadas ou verificadas.');
   } catch (erro) {
     console.error('Erro ao criar tabelas:', erro.message);
   }

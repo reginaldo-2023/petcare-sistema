@@ -1,0 +1,98 @@
+@startuml
+
+title PetCare - Diagrama de Classes de Domínio
+
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam classAttributeIconSize 0
+skinparam classBorderColor #2678C7
+skinparam classBackgroundColor #EAF4FF
+skinparam ArrowColor #16324F
+
+hide empty methods
+
+class Cliente {
+  id : Integer
+  nome : String
+  telefone : String
+  email : String
+  endereco : String
+  criado_em : DateTime
+}
+
+class Pet {
+  id : Integer
+  nome : String
+  especie : String
+  raca : String [0..1]
+  idade : Integer
+  porte : String
+  criado_em : DateTime
+}
+
+class Servico {
+  id : Integer
+  nome : String
+  descricao : String
+  preco : Decimal
+  duracao_minutos : Integer
+  criado_em : DateTime
+}
+
+class VinculoPetServico {
+  criado_em : DateTime
+}
+
+class Agendamento {
+  id : Integer
+  data : Date
+  horario : Time
+  duracao_minutos : Integer
+  status : String
+  observacoes : String
+  criado_em : DateTime
+}
+
+Cliente "1" -- "0..*" Pet : responsável por
+Pet "1" -- "0..*" VinculoPetServico : possui
+Servico "1" -- "0..*" VinculoPetServico : participa de
+
+Pet "1" -- "0..*" Agendamento : possui
+Servico "1" -- "0..*" Agendamento : utilizado em
+
+note right of VinculoPetServico
+  Representa a tabela pet_servicos.
+
+  Cada vínculo associa um pet
+  a um serviço.
+
+  O par pet/serviço é único.
+end note
+
+note right of Agendamento
+  Status permitidos:
+  agendado, concluido, cancelado.
+
+  A duração é registrada no agendamento.
+
+  Atendimentos não cancelados do mesmo
+  pet não podem se sobrepor.
+
+  Agendar não exige vínculo prévio
+  na tabela pet_servicos.
+end note
+
+legend bottom
+  Modelo de classes de domínio.
+
+  As associações representam as referências
+  entre os objetos do domínio.
+
+  No banco, essas referências são armazenadas
+  por chaves estrangeiras.
+
+  O projeto utiliza funções e rotas Express;
+  este diagrama não representa classes JavaScript.
+endlegend
+
+@enduml

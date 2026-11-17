@@ -1,0 +1,75 @@
+@startuml
+left to right direction
+
+title PetCare - Diagrama de Caso de Uso
+
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam actorBorderColor #16324F
+skinparam usecaseBorderColor #2678C7
+skinparam usecaseBackgroundColor #EAF4FF
+skinparam rectangleBorderColor #16324F
+
+actor "Funcionário do pet shop" as Funcionario
+
+rectangle "Sistema PetCare" {
+  usecase "Gerenciar clientes e tutores" as UCClientes
+  usecase "Gerenciar pets" as UCPets
+  usecase "Gerenciar serviços" as UCServicos
+
+  usecase "Vincular pet a serviço" as UCVincular
+  usecase "Desvincular pet de serviço" as UCDesvincular
+
+  usecase "Cadastrar agendamento" as UCCadastrar
+  usecase "Consultar e pesquisar\nagendamentos" as UCConsultar
+  usecase "Editar agendamento" as UCEditar
+  usecase "Excluir agendamento" as UCExcluir
+}
+
+Funcionario -- UCClientes
+Funcionario -- UCPets
+Funcionario -- UCServicos
+Funcionario -- UCVincular
+Funcionario -- UCDesvincular
+Funcionario -- UCCadastrar
+Funcionario -- UCConsultar
+Funcionario -- UCEditar
+Funcionario -- UCExcluir
+
+note right of UCClientes
+  Cadastrar, consultar,
+  pesquisar, editar e excluir.
+end note
+
+note right of UCPets
+  Cada pet possui um tutor.
+  Cadastrar, consultar,
+  pesquisar, editar e excluir.
+end note
+
+note right of UCServicos
+  Cadastrar, consultar,
+  pesquisar, editar e excluir.
+end note
+
+note right of UCCadastrar
+  Selecionar pet, serviço, data e horário.
+  Registrar a duração do serviço.
+  Impedir sobreposição de atendimentos
+  não cancelados para o mesmo pet.
+end note
+
+note right of UCEditar
+  Permite alterar os dados e o status:
+  agendado, concluído ou cancelado.
+
+  Ao alterar pet, data, horário ou serviço,
+  verificar novamente os conflitos.
+end note
+
+note bottom of UCExcluir
+  Excluir um agendamento não exclui
+  o pet nem o serviço.
+end note
+
+@enduml
